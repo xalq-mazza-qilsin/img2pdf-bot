@@ -7,5 +7,5 @@ class IsBotAdminFilter(BaseFilter):
         self.user_ids = user_ids
 
     async def __call__(self, message: Message) -> bool:
-        admin_ids_int = [int(id) for id in self.user_ids]
+        admin_ids_int = [int(admin_id) for admin_id in self.user_ids]
         return int(message.from_user.id) in admin_ids_int
