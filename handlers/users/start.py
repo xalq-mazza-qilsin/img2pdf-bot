@@ -46,6 +46,6 @@ async def do_start(message: types.Message):
             )
         except Exception as error:
             logger.info(f"Data did not send to admin: {admin}. Error: {error}")
-    await message.answer(f"Assalomu alaykum {make_title(full_name)}\!"
-                         f"\n\nPDF ga aylantirish uchun rasm yoki bir nechta rasmlarni yuboring\.",
+    await message.answer(f"Assalomu alaykum {make_title(full_name)}\!\n\nPDF ga aylantirish uchun rasm yuboring\."
+                         f"\n_Agar rasmlaringiz ko'p bo'lsa alohida alohida qilib jo'nating\!_",
                          parse_mode=ParseMode.MARKDOWN_V2)
