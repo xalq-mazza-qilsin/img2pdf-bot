@@ -2,7 +2,7 @@ from datetime import datetime
 from aiogram import Router, types, F
 from aiogram.fsm.context import FSMContext
 from loader import bot
-from utils.imgtopdf import images_to_pdf
+from utils.imgtopdf import images_to_pdf, delete_specific_files
 from data.config import CHANNEL_ID
 
 router = Router()
@@ -40,9 +40,14 @@ async def send_pdf(message: types.Message, state: FSMContext):
         images_to_pdf(images, file_path)
         bot_properties = await bot.me()
         file = await bot.send_document(chat_id=CHANNEL_ID, document=types.input_file.FSInputFile(file_path),
-                                       caption=f"@{bot_properties.username} orqali tayyorlandi!")
-        await message.answer_document(file.document.file_id, caption=file.caption)
+                                       caption=f"@{bot_properties.username} orqali tayyorlandi!"
+                                               f"\n\nUser ID: {message.from_user.id}")
+        await message.answer_document(file.document.file_id, caption=f"@{bot_properties.username} orqali tayyorlandi!")
         await msg.delete()
         await state.clear()
+
+        image_paths = [image.get('path')[7:] for image in images]
+        delete_specific_files("images/", image_paths)
+        delete_specific_files('pdfs/', [f'{message.from_user.id}.pdf'])
     else:
         await message.answer("Siz hali rasm yubormadingiz. Iltimos kamida bir dona rasm yuboring.")

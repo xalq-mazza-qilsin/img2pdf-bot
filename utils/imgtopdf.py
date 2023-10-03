@@ -1,3 +1,6 @@
+import os
+import logging
+
 from reportlab.lib.pagesizes import A4, mm
 from reportlab.platypus import Image, SimpleDocTemplate
 
@@ -32,3 +35,13 @@ def images_to_pdf(images, output_path):
         story.append(img)
 
     doc.build(story)
+
+
+def delete_specific_files(folder_path, files_to_delete):
+    try:
+        for file_name in files_to_delete:
+            file_path = os.path.join(folder_path, file_name)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+    except Exception as e:
+        logging.error(f"An error occurred when attempted to delete files: Error: {e}")
