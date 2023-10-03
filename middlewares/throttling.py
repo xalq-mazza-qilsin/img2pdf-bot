@@ -13,7 +13,7 @@ class ThrottlingMiddleware(BaseMiddleware):
     async def __call__(self, handler, event: Message, data):
         user_id = event.from_user.id
         current_time = time.time()
-        
+
         # Ushbu foydalanuvchining so'nggi so'rovi bo'yicha yozuv mavjudligini tekshirish
         last_request_time = self.user_timeouts.get(user_id, 0)
         if current_time - last_request_time < self.slow_mode_delay:
